@@ -82,13 +82,16 @@ class Poll
       return -1 if (a.votes > b.votes)
       0
 
+    graph_url = ''
+    graph_url += ("#{answer.votes}" for answer in poll.answers).join(",")
+    graph_url += "&cht=p3&chl="
+    graph_url += ("#{answer.text}" for answer in poll.answers).join("|")
+    msg.send(graph_url)
+
     results = ''
     results += ("#{answer.text} (#{answer.votes})" for answer in poll.answers).join("\n")
     results += "\n\nOut of #{Object.keys(poll.voters).length} total voters, #{poll.cancelled} canceled their vote."
     results += "\nhttps://chart.googleapis.com/chart?chs=250x100&chd=t:"
-    results += ("#{answer.votes}" for answer in poll.answers).join(",")
-    results += "&cht=p3&chl="
-    results += ("#{answer.text}" for answer in poll.answers).join("|")
 
   # Vote management
   vote: (msg) =>
