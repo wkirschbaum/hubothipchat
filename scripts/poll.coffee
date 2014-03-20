@@ -82,11 +82,7 @@ class Poll
       return -1 if (a.votes > b.votes)
       0
 
-    graph_url = ''
-    graph_url += ("#{answer.votes}" for answer in poll.answers).join(",")
-    graph_url += "&cht=p3&chl="
-    graph_url += ("#{answer.text}" for answer in poll.answers).join("|")
-    msg.send(graph_url)
+    msg.send ("#{answer.votes}" for answer in poll.answers).join(",") + "&cht=p3&chl=" + ("#{answer.text}" for answer in poll.answers).join("|")
 
     results = ''
     results += ("#{answer.text} (#{answer.votes})" for answer in poll.answers).join("\n")
