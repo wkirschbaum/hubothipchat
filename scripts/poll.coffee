@@ -82,7 +82,7 @@ class Poll
       return -1 if (a.votes > b.votes)
       0
 
-    results = "https://chart.googleapis.com/chart?chs=250x100&chd=t:"
+    results = "https://chart.googleapis.com/chart?chs=350x130&chd=t:"
     results += ("#{answer.votes}" for answer in poll.answers).join(",")
     results += "&cht=p3&chl="
     results += (encodeURIComponent("#{answer.text}") for answer in poll.answers).join("|")
