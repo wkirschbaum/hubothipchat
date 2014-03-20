@@ -85,7 +85,7 @@ class Poll
     results = "https://chart.googleapis.com/chart?chs=250x100&chd=t:"
     results += ("#{answer.votes}" for answer in poll.answers).join(",")
     results += "&cht=p3&chl="
-    results += ("#{answer.text}" for answer in poll.answers).join("|")
+    results += ("'#{answer.text}'" for answer in poll.answers).join("|")
 
   printResults: (poll) ->
     poll.answers.sort (a, b) ->
