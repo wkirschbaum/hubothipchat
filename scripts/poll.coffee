@@ -53,6 +53,7 @@ class Poll
   endPoll: (msg) =>
     return msg.send('There’s currently no poll to end.') unless @poll
 
+    msg.send this.printGraph(@poll)
     msg.send """Here are the results for “#{@poll.question}”:
     #{this.printResults(@poll)}
     This poll was brought to you by #{@poll.user.name}
@@ -76,18 +77,26 @@ class Poll
   printAnswers: ->
     ("#{i+1}. #{answer.text}" for answer, i in @poll.answers).join("\n")
 
+  printGraph: (poll) ->
+    poll.answers.sort (a, b) ->
+      return 1 if (a.votes < b.votes)
+      return -1 if (a.votes > b.votes)
+      0
+
+    results = "https://chart.googleapis.com/chart?chs=250x100&chd=t:"
+    results += ("#{answer.votes}" for answer in poll.answers).join(",")
+    results += "&cht=p3&chl="
+    results += ("#{answer.text}" for answer in poll.answers).join("|")
+
   printResults: (poll) ->
     poll.answers.sort (a, b) ->
       return 1 if (a.votes < b.votes)
       return -1 if (a.votes > b.votes)
       0
 
-    msg.send ("#{answer.votes}" for answer in poll.answers).join(",") + "&cht=p3&chl=" + ("#{answer.text}" for answer in poll.answers).join("|")
-
     results = ''
     results += ("#{answer.text} (#{answer.votes})" for answer in poll.answers).join("\n")
     results += "\n\nOut of #{Object.keys(poll.voters).length} total voters, #{poll.cancelled} canceled their vote."
-    results += "\nhttps://chart.googleapis.com/chart?chs=250x100&chd=t:"
 
   # Vote management
   vote: (msg) =>
