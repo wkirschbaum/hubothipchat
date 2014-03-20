@@ -55,9 +55,8 @@ class Poll
 
     msg.send this.printGraph(@poll)
     msg.send """Here are the results for “#{@poll.question}”:
-    #{this.printResults(@poll)}
-    This poll was brought to you by #{@poll.user.name}
-    """
+    #{this.printResults(@poll)}"""
+    msg.send "This poll was brought to you by #{@poll.user.name}"
 
     @previousPoll = @poll
     @poll = null
