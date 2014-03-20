@@ -85,6 +85,10 @@ class Poll
     results = ''
     results += ("#{answer.text} (#{answer.votes})" for answer in poll.answers).join("\n")
     results += "\n\nOut of #{Object.keys(poll.voters).length} total voters, #{poll.cancelled} canceled their vote."
+    result += "\nhttps://chart.googleapis.com/chart?chs=250x100&chd=t:"
+    results += ("#{answer.votes}" for answer in poll.answers).join(",")
+    results += "&cht=p3&chl="
+    results += ("#{answer.text}" for answer in poll.answers).join("|")
 
   # Vote management
   vote: (msg) =>
