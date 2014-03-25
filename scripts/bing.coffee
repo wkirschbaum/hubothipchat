@@ -13,6 +13,7 @@
 # Author:
 #   Brandon Satrom
 
+
 module.exports = (robot) ->
   robot.respond /(bing)( me)? (.*)/i, (msg) ->
     bingMe msg, msg.match[3], (url) ->
